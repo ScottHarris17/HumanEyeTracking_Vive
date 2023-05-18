@@ -1,4 +1,4 @@
-experimentName = 'Natalia-test';
+experimentName = 'Jeremiah-red-green-extrahighsf-wo';
 
 %load the eye trace
 fID = fopen(['gazeSpace-' experimentName '.txt'], 'r');
