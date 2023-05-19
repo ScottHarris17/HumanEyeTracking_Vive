@@ -1,4 +1,4 @@
-experimentName = 'gazeSpace-Nata-red-green-extrahighsf-wo';
+experimentName = 'Natalia-rg-debug';
 
 %load the eye trace
 fID = fopen(['gazeSpace-' experimentName '.txt'], 'r');
@@ -8,9 +8,9 @@ eyeTrace = fscanf(fID, '(%f, %f, %f)\n');
 fID = fopen(['gazeTime-' experimentName '.txt'], 'r');
 eyeTimes = fscanf(fID, '%f'); %seconds
 
-%load the stimulus absolute timestamps
-fID = fopen(['gratingAbsTime-' experimentName, '.txt'], 'r');
-stimulusAbsTimestamps = fscanf(fID, '%f');
+% load the stimulus absolute timestamps
+% fID = fopen(['gratingAbsTime-' experimentName, '.txt'], 'r');
+% stimulusAbsTimestamps = fscanf(fID, '%f');
 
 %load the stimulus oscillation
 fID = fopen(['gratingSpace-' experimentName, '.txt'], 'r');
@@ -45,6 +45,10 @@ eyeTrace_integrated = cumtrapz(eyeVelocity);
 
 
 %smoothedVert = movmean(elevation, 5);
-plot(eyeTimes(2:end), eyeTrace_integrated, '-r');
+f = figure;
+title(experimentName)
 hold on
-plot(stimulusTimestamps, stimulusSpace, '-k');
+plot(eyeTimes(2:end), eyeTrace_integrated, '-r');
+plot(stimulusTimestamps, -0.2*cumtrapz(stimulusSpace), '-k');
+legend({'Eye Position', 'Stimulus Position'})
+saveas(f, [experimentName '.svg'])
