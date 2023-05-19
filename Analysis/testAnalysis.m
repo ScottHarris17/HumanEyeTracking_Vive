@@ -1,4 +1,4 @@
-experimentName = 'Natalia-rg-debug';
+experimentName = 'Jeremiah-binary-without';
 
 %load the eye trace
 fID = fopen(['gazeSpace-' experimentName '.txt'], 'r');
@@ -49,6 +49,7 @@ f = figure;
 title(experimentName)
 hold on
 plot(eyeTimes(2:end), eyeTrace_integrated, '-r');
-plot(stimulusTimestamps, -0.2*cumtrapz(stimulusSpace), '-k');
+
+plot(stimulusTimestamps, 0.035*cumtrapz(stimulusSpace), '-k');
 legend({'Eye Position', 'Stimulus Position'})
 saveas(f, [experimentName '.svg'])

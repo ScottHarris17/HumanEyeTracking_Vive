@@ -1,4 +1,4 @@
-experimentName = 'Natalia-rg-debug';
+experimentName = 'Natalia-noise-debug';
 
 %load the eye trace
 fID = fopen(['gazeSpace-' experimentName '.txt'], 'r');
