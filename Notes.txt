@@ -1,0 +1,10 @@
+20230518
+- Fixed most of the alignment problem with the stimulus
+- Did innitial test using the binary red/green noise with and without glassers (Jeremiah). Oscillation period was 20 seconds
+
+For next time:
+- Figure out why the stimulus for the glasses experiment drifts when replotted
+- Save metadata about the stimulus with the data
+- Why is the frame rate 83? Are we dropping frames or is this the true frame rate
+- Test, test, test. Try lower contrast, different patterns, slower speeds, faster speeds. Compare red/green to black/white. Will also likely need more repitions per stimulus.
+

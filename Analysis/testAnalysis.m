@@ -20,7 +20,6 @@ stimulusSpace = fscanf(fID, '%f');
 fID = fopen(['gratingTime-' experimentName, '.txt'], 'r');
 stimulusTimestamps = fscanf(fID, '%f');
 
-
 xs = eyeTrace(1:3:numel(eyeTrace));
 ys = eyeTrace(2:3:numel(eyeTrace));
 zs = eyeTrace(3:3:numel(eyeTrace));
