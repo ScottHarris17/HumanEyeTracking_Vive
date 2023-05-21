@@ -58,3 +58,29 @@ shadedErrorBar(xvals, mean(allOscillations_uncorrected), SEM_F(allOscillations_u
 plot(xvals, stimulusTrace, '-k')
 xlabel('Seconds')
 ylabel('Degrees')
+
+%% Reorganize data so it can be plotted like the mice (cosine, not sine)
+phaseShift = -90; %degrees that you would like to phase shift the average response by
+allOscillations_glasses_shifted = zeros(size(allOscillations_glasses));
+for i = 1:size(allOscillations_glasses)
+    allOscillations_glasses_shifted(i, :) = shiftEyeTrace(phaseShift, allOscillations_glasses(i, :));
+end
+
+allOscillations_uncorrected_shifted = zeros(size(allOscillations_uncorrected));
+for i = 1:size(allOscillations_uncorrected)
+    allOscillations_uncorrected_shifted(i, :) = shiftEyeTrace(phaseShift, allOscillations_uncorrected(i, :));
+end
+
+% replot the data
+stimulusTrace = -10*cos(xvals.*2.*pi./stimulusPeriod)+10;
+
+% plot the average eye trace against the stimulus oscillation
+figure
+title('Jeremiah 20230518 - Average Oscillations')
+hold on
+shadedErrorBar(xvals, mean(allOscillations_glasses_shifted), SEM_F(allOscillations_glasses_shifted), 'lineProps', {'Color', "#77AC30",'LineWidth',3})
+shadedErrorBar(xvals, mean(allOscillations_uncorrected_shifted), SEM_F(allOscillations_uncorrected_shifted), 'lineProps', {'Color', "#D95319",'LineWidth',3})
+plot(xvals, stimulusTrace, '-k')
+xlabel('Seconds')
+ylabel('Degrees')
+plot([0 stimulusPeriod], [0 0], '--k')
