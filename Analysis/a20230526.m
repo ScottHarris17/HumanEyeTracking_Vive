@@ -1,8 +1,8 @@
 %% Load the experiment with glasses first
-experimentName = 'Jeremiah-binary-with';
+experimentName = 'Jeremiah-coarse-202305DD';
 experimentLocation = ['C:\Users\mrsco\Box\Dunn Lab\Users\Rigs\Human Behavior\HumanEyeTracking_Vive\Data\' experimentName];
-stimulusPeriod = 20; %seconds
-[eyeTrace_glasses, eyeTimes_glasses, stimulusVelocity_glasses, stimulusTimes_glasses] = parseExperiment(experimentName, experimentLocation);
+stimulusPeriod = 15; %seconds
+[eyeTrace_glasses, eyeTimes_glasses, stimulusVelocity_glasses, stimulusTimes_glasses] = parseExperiment(experimentLocation);
 
 xs_glasses = eyeTrace_glasses(1:3:numel(eyeTrace_glasses));
 ys_glasses = eyeTrace_glasses(2:3:numel(eyeTrace_glasses));
