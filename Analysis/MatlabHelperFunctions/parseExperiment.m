@@ -1,4 +1,4 @@
-function [eyeTrace,eyeTimes, stimulusVelocity, stimulusTimes] = parseExperiment(experimentName, experimentFolderPath)
+function [eyeTrace,eyeTimes, stimulusVelocity, stimulusTimes] = parseExperiment(experimentFolderPath)
 %PARSEEXPERIMENT extracts data from text files (saved from unity)
 
 %load the eye trace
