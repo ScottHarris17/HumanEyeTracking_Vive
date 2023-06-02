@@ -1,14 +1,14 @@
 %% Load the experiment with glasses first
-experimentName = 'Jeremiah-coarse-202305DD';
+experimentName = 'Scott-binary-202305261724';
 experimentLocation = ['C:\Users\mrsco\Box\Dunn Lab\Users\Rigs\Human Behavior\HumanEyeTracking_Vive\Data\' experimentName];
-stimulusPeriod = 15; %seconds
+stimulusPeriod = 30; %seconds
 [eyeTrace_glasses, eyeTimes_glasses, stimulusVelocity_glasses, stimulusTimes_glasses] = parseExperiment(experimentLocation);
 
 xs_glasses = eyeTrace_glasses(1:3:numel(eyeTrace_glasses));
 ys_glasses = eyeTrace_glasses(2:3:numel(eyeTrace_glasses));
 zs_glasses = eyeTrace_glasses(3:3:numel(eyeTrace_glasses));
 
-[azimuth_glasses, elevation_glasses, r] = unityGazeDirection(xs_glasses, ys_glasses, zs_glasses);
+[azimuth_glasses, elevation_glasses, ~] = unityGazeDirection(xs_glasses, ys_glasses, zs_glasses);
 
 elevation_deg_glasses = rad2deg(elevation_glasses);
 
@@ -19,12 +19,11 @@ eyeTrace_smoothed_glasses = movmean(elevation_deg_glasses, 30);
 eyeTrace_glasses_cleaned = rmoutliersEyeTrace(eyeTrace_smoothed_glasses);
 allOscillations_glasses = oscillationAlignmentVive(stimulusPeriod, 0, stimulusTimes_glasses, eyeTimes_glasses, eyeTrace_glasses_cleaned);
 
-
 %% Redo everything for the experiment without glasses
-experimentName = 'Jeremiah-binary-without';
+experimentName = 'Jeremiah-bw-binary-without-glasses-202305261922';
 experimentLocation = ['C:\Users\mrsco\Box\Dunn Lab\Users\Rigs\Human Behavior\HumanEyeTracking_Vive\Data\' experimentName];
-stimulusPeriod = 20; %seconds
-[eyeTrace_uncorrected, eyeTimes_uncorrected, stimulusVelocity_uncorrected, stimulusTimes_uncorrected] = parseExperiment(experimentName, experimentLocation);
+stimulusPeriod = 30; %seconds
+[eyeTrace_uncorrected, eyeTimes_uncorrected, stimulusVelocity_uncorrected, stimulusTimes_uncorrected] = parseExperiment(experimentLocation);
 
 xs_uncorrected = eyeTrace_uncorrected(1:3:numel(eyeTrace_uncorrected));
 ys_uncorrected = eyeTrace_uncorrected(2:3:numel(eyeTrace_uncorrected));
@@ -45,15 +44,16 @@ allOscillations_uncorrected = oscillationAlignmentVive(stimulusPeriod, 0, stimul
 %% Plot the average oscillations
 % recreate a single stimulus oscillation
 xvals = linspace(0, stimulusPeriod, 3000);
-stimulusTrace = 10*sin(xvals.*2.*pi./stimulusPeriod);
+relativeStimGain = 5.5;
+stimulusTrace = -9*(relativeStimGain/5.5)*cos(xvals.*2.*pi./stimulusPeriod)+relativeStimGain/5.5*9;
 
 % plot the average eye trace against the stimulus oscillation
 SEM_F = @(x) std(x)./sqrt(size(x, 1));
 figure
-title('Jeremiah 20230518 - Average Oscillations')
+title([experimentName '- Average Oscillations'])
 hold on
 shadedErrorBar(xvals, mean(allOscillations_glasses), SEM_F(allOscillations_glasses), 'lineProps', {'Color', "#77AC30",'LineWidth',3})
-shadedErrorBar(xvals, mean(allOscillations_uncorrected), SEM_F(allOscillations_uncorrected), 'lineProps', {'Color', "#D95319",'LineWidth',3})
+%shadedErrorBar(xvals, mean(allOscillations_uncorrected), SEM_F(allOscillations_uncorrected), 'lineProps', {'Color', "#D95319",'LineWidth',3})
 plot(xvals, stimulusTrace, '-k')
 xlabel('Seconds')
 ylabel('Degrees')
@@ -65,20 +65,20 @@ for i = 1:size(allOscillations_glasses)
     allOscillations_glasses_shifted(i, :) = shiftEyeTrace(phaseShift, allOscillations_glasses(i, :));
 end
 
-allOscillations_uncorrected_shifted = zeros(size(allOscillations_uncorrected));
-for i = 1:size(allOscillations_uncorrected)
-    allOscillations_uncorrected_shifted(i, :) = shiftEyeTrace(phaseShift, allOscillations_uncorrected(i, :));
-end
+% allOscillations_uncorrected_shifted = zeros(size(allOscillations_uncorrected));
+% for i = 1:size(allOscillations_uncorrected)
+%     allOscillations_uncorrected_shifted(i, :) = shiftEyeTrace(phaseShift, allOscillations_uncorrected(i, :));
+% end
 
 % replot the data
 stimulusTrace = -10*cos(xvals.*2.*pi./stimulusPeriod)+10;
 
 % plot the average eye trace against the stimulus oscillation
 figure
-title('Jeremiah 20230518 - Average Oscillations')
+title([experimentName '- Average Oscillations'])
 hold on
 shadedErrorBar(xvals, mean(allOscillations_glasses_shifted), SEM_F(allOscillations_glasses_shifted), 'lineProps', {'Color', "#77AC30",'LineWidth',3})
-shadedErrorBar(xvals, mean(allOscillations_uncorrected_shifted), SEM_F(allOscillations_uncorrected_shifted), 'lineProps', {'Color', "#D95319",'LineWidth',3})
+%shadedErrorBar(xvals, mean(allOscillations_uncorrected_shifted), SEM_F(allOscillations_uncorrected_shifted), 'lineProps', {'Color', "#D95319",'LineWidth',3})
 plot(xvals, stimulusTrace, '-k')
 xlabel('Seconds')
 ylabel('Degrees')
