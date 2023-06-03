@@ -1,0 +1,1 @@
+{"frequency":0.7177774310112,"amplitude":0.054999999701976779,"period":30.0,"phase":0.0,"degreesPerSecond":20.0,"nodes":[0.0,180.00027465820313,270.0000305175781],"tex":{"instanceID":0}}
