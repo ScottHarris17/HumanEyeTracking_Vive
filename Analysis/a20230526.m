@@ -1,7 +1,7 @@
 %% Load the experiment with glasses first
-experimentName = 'Scott-binary-202305261724';
+experimentName = 'Scott-highSF-slow-speed-202306021905';
 experimentLocation = ['C:\Users\mrsco\Box\Dunn Lab\Users\Rigs\Human Behavior\HumanEyeTracking_Vive\Data\' experimentName];
-stimulusPeriod = 30; %seconds
+stimulusPeriod = getStimPeriod(experimentLocation); %seconds
 [eyeTrace_glasses, eyeTimes_glasses, stimulusVelocity_glasses, stimulusTimes_glasses] = parseExperiment(experimentLocation);
 
 xs_glasses = eyeTrace_glasses(1:3:numel(eyeTrace_glasses));
@@ -14,15 +14,15 @@ elevation_deg_glasses = rad2deg(elevation_glasses);
 
 %smooth the trace (important for getting rid of adjacent frames with the
 %exact same value)
-eyeTrace_smoothed_glasses = movmean(elevation_deg_glasses, 30);
+eyeTrace_smoothed_glasses = movmean(elevation_deg_glasses, 90);
 
 eyeTrace_glasses_cleaned = rmoutliersEyeTrace(eyeTrace_smoothed_glasses);
 allOscillations_glasses = oscillationAlignmentVive(stimulusPeriod, 0, stimulusTimes_glasses, eyeTimes_glasses, eyeTrace_glasses_cleaned);
 
 %% Redo everything for the experiment without glasses
-experimentName = 'Jeremiah-bw-binary-without-glasses-202305261922';
+experimentName = 'Scott-lowSF-standard-speed-202306021846';
 experimentLocation = ['C:\Users\mrsco\Box\Dunn Lab\Users\Rigs\Human Behavior\HumanEyeTracking_Vive\Data\' experimentName];
-stimulusPeriod = 30; %seconds
+stimulusPeriod = getStimPeriod(experimentLocation); %seconds
 [eyeTrace_uncorrected, eyeTimes_uncorrected, stimulusVelocity_uncorrected, stimulusTimes_uncorrected] = parseExperiment(experimentLocation);
 
 xs_uncorrected = eyeTrace_uncorrected(1:3:numel(eyeTrace_uncorrected));

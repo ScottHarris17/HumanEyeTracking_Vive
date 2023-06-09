@@ -53,7 +53,7 @@ figure
 title('Jeremiah 20230518 - Average Oscillations')
 hold on
 shadedErrorBar(xvals, mean(allOscillations_glasses), SEM_F(allOscillations_glasses), 'lineProps', {'Color', "#77AC30",'LineWidth',3})
-shadedErrorBar(xvals, mean(allOscillations_uncorrected), SEM_F(allOscillations_uncorrected), 'lineProps', {'Color', "#D95319",'LineWidth',3})
+%shadedErrorBar(xvals, mean(allOscillations_uncorrected), SEM_F(allOscillations_uncorrected), 'lineProps', {'Color', "#D95319",'LineWidth',3})
 plot(xvals, stimulusTrace, '-k')
 xlabel('Seconds')
 ylabel('Degrees')
